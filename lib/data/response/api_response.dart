@@ -1,3 +1,5 @@
+// ignore_for_file: annotate_overrides
+
 import 'package:mvvm/data/response/status.dart';
 
 class ApiResponse<T> {
@@ -9,7 +11,7 @@ class ApiResponse<T> {
 
   ApiResponse.loading() {
     this.status = Status.LOADING;
-  } //: status = Status.LOADING;
+  } // : status = Status.LOADING;
   ApiResponse.completed() {
     this.status = Status.COMPLETED;
   } // : status = Status.COMPLETED;
