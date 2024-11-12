@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm/utils/routes/routes_name.dart';
+import 'package:mvvm/utils/routes/routes.dart';
 
 void main() {
   runApp(const MainApp());
@@ -10,11 +12,11 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+      title: "MVVM",
+      // landing page
+      initialRoute: RoutesName.login,
+      // sends current/changed route to generateRoute method in Routes class
+      onGenerateRoute: Routes.generateRoute,
     );
   }
 }
