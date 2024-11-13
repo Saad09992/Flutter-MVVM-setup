@@ -1,5 +1,4 @@
 import 'package:another_flushbar/flushbar.dart';
-import 'package:another_flushbar/flushbar_route.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 
@@ -45,7 +44,7 @@ class Utils {
         ),
       ],
       flushbarPosition: FlushbarPosition.TOP,
-    )..show(context);
+    ).show(context);
   }
 
   static void snackBar(String msg, BuildContext context) {
@@ -74,5 +73,11 @@ class Utils {
         ),
       ),
     );
+  }
+
+  static void fieldFocusChange(
+      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
+    currentFocus.unfocus();
+    FocusScope.of(context).requestFocus(nextFocus);
   }
 }

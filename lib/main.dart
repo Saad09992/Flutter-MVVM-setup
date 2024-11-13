@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm/resources/colors.dart';
 import 'package:mvvm/utils/routes/routes_name.dart';
 import 'package:mvvm/utils/routes/routes.dart';
 
@@ -11,8 +12,14 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: "MVVM",
+      theme: ThemeData(
+          appBarTheme: const AppBarTheme(
+              backgroundColor: AppColors.appBarColor,
+              centerTitle: true,
+              titleTextStyle:
+                  TextStyle(color: AppColors.buttonTextColor, fontSize: 30))),
       // landing page
       initialRoute: RoutesName.login,
       // sends current/changed route to generateRoute method in Routes class
