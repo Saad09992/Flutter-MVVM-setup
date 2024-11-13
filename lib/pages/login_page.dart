@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/utils/routes/routes_name.dart';
+import '../utils/utils.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -21,10 +21,23 @@ class _LoginPageState extends State<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, RoutesName.signup);
-                },
-                child: const Text("SignUp page"))
+              onTap: () {
+                Utils.flushBarErrorMessage("Error message", context);
+              },
+              child: const Text("Error FlushBar"),
+            ),
+            InkWell(
+              onTap: () {
+                Utils.toastMessage('No internet connection');
+              },
+              child: const Text("Toast message"),
+            ),
+            InkWell(
+              onTap: () {
+                Utils.snackBar("snack Bar message", context);
+              },
+              child: const Text("Click me"),
+            )
           ],
         ),
       ),
