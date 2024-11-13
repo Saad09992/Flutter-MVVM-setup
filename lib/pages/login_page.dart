@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm/page_model/auth_model.dart';
 import 'package:mvvm/resources/components/round_button.dart';
+import 'package:mvvm/utils/routes/routes_name.dart';
+import 'package:provider/provider.dart';
 import '../utils/utils.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,10 +14,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
-  TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   FocusNode emailFocusNode = FocusNode();
-  FocusNode usernameFocusCode = FocusNode();
   FocusNode passwordFocusNode = FocusNode();
   ValueNotifier<bool> hidePassword = ValueNotifier<bool>(true);
 
@@ -22,16 +23,15 @@ class _LoginPageState extends State<LoginPage> {
   void dispose() {
     super.dispose();
     emailController.dispose();
-    usernameController.dispose();
     passwordController.dispose();
     emailFocusNode.dispose();
     passwordFocusNode.dispose();
-    usernameFocusCode.dispose();
     hidePassword.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final authPageModel = Provider.of<AuthModel>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Login Page"),
@@ -44,19 +44,6 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               const SizedBox(
                 height: 10,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  hintText: 'Username',
-                  labelText: 'Username',
-                  prefixIcon: Icon(Icons.person),
-                ),
-                focusNode: usernameFocusCode,
-                controller: usernameController,
-                onFieldSubmitted: (val) {
-                  Utils.fieldFocusChange(
-                      context, usernameFocusCode, emailFocusNode);
-                },
               ),
               const SizedBox(
                 height: 10,
@@ -104,14 +91,11 @@ class _LoginPageState extends State<LoginPage> {
                 height: 30,
               ),
               RoundButton(
-                title: "Signup",
+                title: "Login",
                 onPress: () {
-                  if (usernameController.text.isEmpty) {
+                  if (emailController.text.isEmpty) {
                     Utils.flushBarErrorMessage(
                         "Please enter your username", context);
-                  } else if (emailController.text.isEmpty) {
-                    Utils.flushBarErrorMessage(
-                        "Please enter your email", context);
                   } else if (passwordController.text.isEmpty) {
                     Utils.flushBarErrorMessage(
                         "Please enter your password", context);
@@ -119,11 +103,22 @@ class _LoginPageState extends State<LoginPage> {
                     Utils.flushBarErrorMessage(
                         "Password must contain 6 letter at least", context);
                   } else {
-                    print(usernameController.text);
-                    print(emailController.text);
-                    print(passwordController.text);
+                    Map data = {
+                      'email': emailController.text,
+                      'password': passwordController.text
+                    };
+                    authPageModel.loginApi(data, context);
                   }
                 },
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, RoutesName.signup);
+                },
+                child: const Text("Dont have an account? Click here"),
               ),
             ],
           ),

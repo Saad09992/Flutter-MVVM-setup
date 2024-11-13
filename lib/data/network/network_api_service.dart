@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:mvvm/data/app_exceptions.dart';
@@ -28,6 +29,11 @@ class NetworkApiService extends BaseApiService {
     dynamic responseJson;
 
     try {
+      if (kDebugMode) {
+        print("inside main post api response try block");
+        print(data.toString());
+        print(url);
+      }
       // response from post request
       Response response = await http
           .post(Uri.parse(url), body: data)
@@ -48,10 +54,16 @@ class NetworkApiService extends BaseApiService {
       case 200:
         dynamic responseJson = jsonDecode(response.body);
         return responseJson;
+      case 201:
+        dynamic responseJson = jsonDecode(response.body);
+        print(responseJson.toString());
+        return responseJson;
       case 400:
         throw BadReqException(response.body.toString());
       case 404:
         throw UnAuthException(response.body.toString());
+      case 409:
+        throw BadReqException(response.body.toString());
       default:
         throw FetchDataException(
             "Error occured while communicating with server with status code ${response.statusCode.toString()}");

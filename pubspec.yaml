@@ -1,6 +1,6 @@
 name: mvvm
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
@@ -13,6 +13,7 @@ dependencies:
   fluttertoast: ^8.2.8
   http: ^1.2.2
   provider: ^6.1.2
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:
